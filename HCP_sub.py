@@ -40,52 +40,6 @@ def lstmCCA_model(shape_fmri):
     model = Model(inputs = [input_fMRI,input_fMRI_dwt],
                   outputs = merged_data)
     return model
-def lstmCCA_model_nonneg(shape_fmri):
-    input_fMRI = Input(shape = shape_fmri)
-    input_fMRI_dwt = Input(shape = shape_fmri)
-    shared_conv1D = Conv1D(4,5,padding='same',kernel_constraint=non_neg())
-    shared_lstm = LSTM(4,return_sequences = True)
-    shared_lstm_2 = LSTM(1,return_sequences = True)
-    shared_tdense = TimeDistributed(Dense(1))
-    
-    conv1D_fMRI = shared_conv1D(input_fMRI)
-    conv1D_fMRI_dwt = shared_conv1D(input_fMRI_dwt)
-    lstm_fMRI = shared_lstm(conv1D_fMRI)
-    lstm_fMRI_dwt = shared_lstm(conv1D_fMRI_dwt)
-    
-    tdense_fMRI = shared_tdense(lstm_fMRI)
-    tdense_fMRI_dwt = shared_tdense(lstm_fMRI_dwt)
-    
-#    tdense_fMRI = Flatten()(tdense_fMRI)
-#    tdense_fMRI_dwt = Flatten()(tdense_fMRI_dwt)
-    
-    merged_data = concatenate([tdense_fMRI,tdense_fMRI_dwt],axis = -1)
-    model = Model(inputs = [input_fMRI,input_fMRI_dwt],
-                  outputs = merged_data)
-    return model
-def conv1D_model(shape_fmri):
-    input_fMRI = Input(shape = shape_fmri)
-    input_fMRI_dwt = Input(shape = shape_fmri)
-    shared_conv1D = Conv1D(8,4,padding='same')
-    shared_conv1D_2 = Conv1D(1,4,padding='same')
-    shared_lstm = Bidirectional(LSTM(10,return_sequences = True))
-    shared_tdense = TimeDistributed(Dense(1))
-    
-    conv1D_fMRI = shared_conv1D(input_fMRI)
-    conv1D_fMRI_dwt = shared_conv1D(input_fMRI_dwt)
-
-    
-    tdense_fMRI = shared_conv1D_2(conv1D_fMRI)
-    tdense_fMRI_dwt = shared_conv1D_2(conv1D_fMRI_dwt)
-    
-#    tdense_fMRI = Flatten()(tdense_fMRI)
-#    tdense_fMRI_dwt = Flatten()(tdense_fMRI_dwt)
-    
-    merged_data = concatenate([tdense_fMRI,tdense_fMRI_dwt],
-                              axis = -1)
-    model = Model(inputs = [input_fMRI,input_fMRI_dwt],
-                  outputs = merged_data)
-    return model
 def correlation_coefficient_loss(y_true, y_pred):
     x = y_true
     y = y_pred
