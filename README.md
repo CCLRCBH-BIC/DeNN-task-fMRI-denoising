@@ -9,7 +9,7 @@ This project aims to clean task fMRI data based on the task design matrix. With 
 If you find this toolbox is useful in your project, plaese cite our work.
 *  **Zhengshi Yang**, Xiaowei Zhuang, Karthik Sreenivasan, Virendra Mishra, Tim Curran, and Dietmar Cordes (2019). A robust deep neural network for denoising task-based fMRI data: An application to working memory and episodic memory. Medical Image Analysis.
 
-### Requited libraries
+### Required libraries
 - [Matlab](https://www.https://www.mathworks.com/products/matlab.html): Matlab is used to extract time series from NIFTI file and save .mat file for denoising in Python.
 - [Python](https://www.python.org/downloads/): Python 3 by default
 - [Keras](https://www.https://keras.io/): Keras with Theano as backend is used in this project.
